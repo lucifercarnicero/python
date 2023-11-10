@@ -1,4 +1,9 @@
-#arbol de nodos, empezamos creando un nodo.
+# -*- coding: utf-8 -*-
+"""
+Created on Fri Nov 10 11:27:13 2023
+
+@author: babei
+"""
 
 class Nodo:
     def __init__(self,datos,hijos=None):
@@ -50,8 +55,6 @@ class Nodo:
     
     def __str__(self):
         return str(self.get_datos())
-    
-#nodo de prueba para ver que el código funciona
 
 # Crear nodos de prueba
 nodo_A = Nodo("A")
@@ -82,38 +85,4 @@ if nodo_para_comprobar.en_lista(lista_nodos):
     print(f"\nEl nodo {nodo_para_comprobar} está en la lista.")
 else:
     print(f"\nEl nodo {nodo_para_comprobar} no está en la lista.")
-
-
-# Ejercicio: Tengo una lista de objetos ordenados de una manera determinada. Por ejemplo 1,2,3,4 pero sólo puedo mover los dos izquierda, los dos derecha, o los dos centrales. Objetivo: A partir de la cola de estados visitados y de la lista de estados por visitar vamos generando las posiciones accedidas.
-
-#Estado inicial, cola_fifo, lista de visitados y lista de hijos
-#Cada operación genero un nodo hijo y lo meto en la cola_fifo y en la lista de visitados si no está ya en la lista de visitados ni en la cola_fifo (para no repetir nodos) y si no es solución. Si es solución, salgo con la solución. 
-#Si la cola_fifo está vacía, no hay solución.
-#Nodos frontera es una cola FIFO.
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
