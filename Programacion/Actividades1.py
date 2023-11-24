@@ -445,6 +445,42 @@ print(f"{empleado['nombre']} tiene {empleado['edad']} años, trabaja en el depar
 
 #33. . Escribir un programa que almacene el diccionario con los créditos de los módulos de un ciclo {'Programación': 9, 'Lenguajes de marcas': 4, 'Bases de datos': 5} y después muestre por pantalla los créditos de cada módulo en el formato <módulo> tiene <créditos> créditos, Al final debe mostrar también el número total de créditos del módulo.
 
+    # Definir el diccionario con los créditos de los módulos
+creditos_modulos = {'Programación': 9, 'Lenguajes de marcas': 4, 'Bases de datos': 5}
+
+# Mostrar los créditos de cada módulo en el formato solicitado
+for modulo, creditos in creditos_modulos.items():
+    print(f"{modulo} tiene {creditos} créditos")
+
+# Calcular y mostrar el número total de créditos
+total_creditos = sum(creditos_modulos.values())
+print(f"\nEl número total de créditos del ciclo es: {total_creditos}")
+
+# 34. Escribir un programa que cree un diccionario de traducción español-inglés. El usuario introducirá las palabras en español y francés separadas por dos puntos, y cada par <palabra>:<traducción> separados por comas. El programa debe crear un diccionario con las palabras y sus traducciones. Después pedirá una frase en español y utilizará el diccionario para traducirla palabra a palabra. Si una palabra no está en el diccionario debe dejarla sin traducir.
+
+# Pedir al usuario las palabras y sus traducciones
+diccionario = {}
+palabras = input("Introduce las palabras y sus traducciones en formato palabra:traducción separadas por comas: ")
+
+# Dividir la cadena en una lista de palabras
+for palabra in palabras.split(","):
+    # Dividir cada palabra en una lista de dos elementos
+    clave, valor = palabra.split(":")
+    # Agregar clave y valor al diccionario
+    diccionario[clave] = valor
+
+# Pedir una frase para traducir
+frase = input("Introduce una frase en español: ")
+
+# Traducir la frase palabra a palabra
+for palabra in frase.split():
+    if palabra in diccionario:
+        print(diccionario[palabra], end=" ")
+    else:
+        print(palabra, end=" ")
+
+        
+
 
 
 
