@@ -904,6 +904,212 @@ def jugar_ahorcado():
 if __name__ == "__main__":
     jugar_ahorcado()
 
+# 57. Diseñar la clase CuentaCorriente, sabiendo que los datos necesarios son: saldo, DNI, nombre y descubierto -que será por defecto de 50 euros-. Las operaciones típicas con una cuenta corriente son:
+# a. Sacar dinero: se necesita el DNI y nombre del titular 
+# b. Crear la cuenta:
+#c. Ingresar dinero, incrementando el saldo
+#d. Mostrar la información de la cuenta.
+# Se pide crear al menos tres cuentas en el main de una clase principal, con un menú de opciones que permita navegar entre las diferentes operaciones. Asimismo habrá otro menú que permite elegir la cuenta corriente sobre la que se va a realizar esas operaciones. Los atributos serán siempre privados por lo que deben crearse los getters y setters.
+
+class CuentaCorriente:
+
+    def __init__(self, saldo, dni, nombre, descubierto=50):
+        self.saldo = saldo
+        self.dni = dni
+        self.nombre = nombre
+        self.descubierto = descubierto
+
+    def sacar_dinero(self, dni, nombre, cantidad):
+        if dni == self.dni and nombre == self.nombre:
+            if self.saldo - cantidad >= -self.descubierto:
+                self.saldo -= cantidad
+                print(f"Has sacado {cantidad} euros. Saldo actual: {self.saldo}")
+            else:
+                print("No tienes suficiente saldo para sacar esa cantidad")
+        else:
+            print("Los datos introducidos no son correctos")
+
+    def ingresar_dinero(self, cantidad):
+        self.saldo += cantidad
+        print(f"Has ingresado {cantidad} euros. Saldo actual: {self.saldo}")
+
+    def mostrar_informacion(self):
+        print(f"Saldo: {self.saldo}")
+        print(f"DNI: {self.dni}")
+        print(f"Nombre: {self.nombre}")
+        print(f"Descubierto: {self.descubierto}")
+
+if __name__ == "__main__":
+
+    cuenta1 = CuentaCorriente(1000, "12345678A", "Pepe")
+    cuenta2 = CuentaCorriente(500, "87654321B", "Juan")
+    cuenta3 = CuentaCorriente(1500, "11111111C", "Ana")
+
+    cuentas = [cuenta1, cuenta2, cuenta3]
+
+    while True:
+        print("\nMenú principal")
+        print("1. Seleccionar cuenta")
+        print("2. Salir")
+        opcion = input("Introduce una opción: ")
+
+        if opcion == "1":
+            print("\nSeleccionar cuenta")
+            print("1. Cuenta 1")
+            print("2. Cuenta 2")
+            print("3. Cuenta 3")
+            opcion = input("Introduce una opción: ")
+
+            if opcion == "1":
+                cuenta = cuenta1
+            elif opcion == "2":
+                cuenta = cuenta2
+            elif opcion == "3":
+                cuenta = cuenta3
+            else:
+                print("Opción inválida")
+                continue
+
+            while True:
+                print("\nMenú de operaciones")
+                print("1. Sacar dinero")
+                print("2. Ingresar dinero")
+                print("3. Mostrar información")
+                print("4. Cambiar de cuenta")
+                print("5. Salir")
+                opcion = input("Introduce una opción: ")
+
+                if opcion == "1":
+                    dni = input("Introduce tu DNI: ")
+                    nombre = input("Introduce tu nombre: ")
+                    cantidad = float(input("Introduce la cantidad a sacar: "))
+                    cuenta.sacar_dinero(dni, nombre, cantidad)
+                elif opcion == "2":
+                    cantidad = float(input("Introduce la cantidad a ingresar: "))
+                    cuenta.ingresar_dinero(cantidad)
+                elif opcion == "3":
+                    cuenta.mostrar_informacion()
+                elif opcion == "4":
+                    break
+                elif opcion == "5":
+                    exit()
+                else:
+                    print("Opción inválida")
+        elif opcion == "2":
+            exit()
+        else:
+            print("Opción inválida")
+
+
+#58. Crear los paquetes y clases necesarios para gestionar una empresa ferroviaria en la que se distinguen dos grandes grupos de clases, Personal y Maquinaria. En la primera se ubican todos los empleados de la empresa y en la segunda todos los vehículos.
+# Tenemos los siguientes actores:
+# a. Maquinistas: nombre, DNI, salario y rango
+# b. Mecánicos: nombre, tfno, DNI,especialidad
+# c. Jefes de estación: nombre y DNI
+# d. Vagones: matrícula, capacidad máxima en kg, capacidad actual en kg, y tipo de mercancía
+# e. Locomotoras: matricula, potencia del motor, antigüedad y mecánico asignado
+# f. Trenes: locomotora y varios vagones, hasta cinco. Un maquinista asignado.
+# Se pide crear además la Clase principal con un main donde se crearán dos trenes con todos los elementos indicados.
+
+#Supongo que hay dos clases Empleado y Maquina de cual heredan las clases Maquinista, Mecanico, JefeEstacion, Vagon, Locomotora y Tren
+
+class Empleado:
+
+    def __init__(self, nombre, dni):
+        self.nombre = nombre
+        self.dni = dni
+
+class Maquinista(Empleado):
+    
+        def __init__(self, nombre, dni, salario, rango):
+            super().__init__(nombre, dni)
+            self.salario = salario
+            self.rango = rango
+
+class Mecanico(Empleado):
+
+    def __init__(self, nombre, dni, telefono, especialidad):
+        super().__init__(nombre, dni)
+        self.telefono = telefono
+        self.especialidad = especialidad
+
+class JefeEstacion(Empleado):
+
+    def __init__(self, nombre, dni):
+        super().__init__(nombre, dni)
+
+class Maquina:
+    
+        def __init__(self, matricula):
+            self.matricula = matricula
+
+class Vagon(Maquina):
+
+    def __init__(self, matricula, capacidad_maxima, capacidad_actual, tipo_mercancia):
+        super().__init__(matricula)
+        self.capacidad_maxima = capacidad_maxima
+        self.capacidad_actual = capacidad_actual
+        self.tipo_mercancia = tipo_mercancia
+
+class Locomotora(Maquina):
+
+    def __init__(self, matricula, potencia_motor, antiguedad, mecanico_asignado):
+        super().__init__(matricula)
+        self.potencia_motor = potencia_motor
+        self.antiguedad = antiguedad
+        self.mecanico_asignado = mecanico_asignado
+
+class Tren:
+
+    def __init__(self, locomotora, vagones, maquinista_asignado):
+        self.locomotora = locomotora
+        self.vagones = vagones
+        self.maquinista_asignado = maquinista_asignado
+
+if __name__ == "__main__":
+    # Crear algunos maquinistas
+    maquinista1 = Maquinista("Carlos", "12345678A", 3000, "Principiante")
+    maquinista2 = Maquinista("Laura", "98765432B", 3500, "Experto")
+
+    # Crear algunos mecánicos
+    mecanico1 = Mecanico("Pedro", "23456789C", "123456789", "Motores")
+    mecanico2 = Mecanico("Ana", "87654321D", "987654321", "Frenos")
+
+    # Crear algunos jefes de estación
+    jefe1 = JefeEstacion("Juan", "34567890E")
+    jefe2 = JefeEstacion("María", "56789012F")
+
+    # Crear algunas máquinas
+    locomotora1 = Locomotora("L123", 5000, 5, mecanico1)
+    locomotora2 = Locomotora("L456", 6000, 3, mecanico2)
+
+    vagon1 = Vagon("V001", 8000, 2000, "Carga general")
+    vagon2 = Vagon("V002", 10000, 5000, "Líquidos")
+
+    # Crear algunos trenes
+    tren1 = Tren(locomotora1, [vagon1], maquinista1)
+    tren2 = Tren(locomotora2, [vagon2], maquinista2)
+
+    # Imprimir información de los maquinistas
+    print("Información de Maquinistas:")
+    print(f"Maquinista 1: {maquinista1.nombre}, DNI: {maquinista1.dni}, Salario: {maquinista1.salario}, Rango: {maquinista1.rango}")
+    print(f"Maquinista 2: {maquinista2.nombre}, DNI: {maquinista2.dni}, Salario: {maquinista2.salario}, Rango: {maquinista2.rango}")
+
+    # Imprimir información de las máquinas
+    print("\nInformación de Máquinas:")
+    print(f"Locomotora 1: Matrícula: {locomotora1.matricula}, Potencia Motor: {locomotora1.potencia_motor}, Antigüedad: {locomotora1.antiguedad}")
+    print(f"Locomotora 2: Matrícula: {locomotora2.matricula}, Potencia Motor: {locomotora2.potencia_motor}, Antigüedad: {locomotora2.antiguedad}")
+    print(f"Vagón 1: Matrícula: {vagon1.matricula}, Capacidad Máxima: {vagon1.capacidad_maxima}, Capacidad Actual: {vagon1.capacidad_actual}, Tipo Mercancía: {vagon1.tipo_mercancia}")
+    print(f"Vagón 2: Matrícula: {vagon2.matricula}, Capacidad Máxima: {vagon2.capacidad_maxima}, Capacidad Actual: {vagon2.capacidad_actual}, Tipo Mercancía: {vagon2.tipo_mercancia}")
+
+    # Imprimir información de los trenes
+    print("\nInformación de Trenes:")
+    print(f"Tren 1: Maquinista: {tren1.maquinista_asignado.nombre}, Locomotora: {tren1.locomotora.matricula}, Vagones: {[vagon.matricula for vagon in tren1.vagones]}")
+    print(f"Tren 2: Maquinista: {tren2.maquinista_asignado.nombre}, Locomotora: {tren2.locomotora.matricula}, Vagones: {[vagon.matricula for vagon in tren2.vagones]}")
+
+
+
+
 
 
 
