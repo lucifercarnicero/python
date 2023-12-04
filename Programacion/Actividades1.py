@@ -480,6 +480,250 @@ for palabra in frase.split():
         print(palabra, end=" ")
 
         
+#35. Escribir un programa que gestione las facturas de una familia. Las facturas se almacenarán en un diccionario donde la clave de cada factura será el tipo de factura -agua, gas,…- y el valor el coste de la factura. El programa debe preguntar al usuario si quiere añadir una nueva factura, pagar una existente o terminar. Si desea añadir una nueva factura se preguntará por el tipo de factura y su coste y se añadirá al diccionario. Si se desea pagar una factura se preguntará por el tipo de factura y se eliminará del diccionario. Después de cada operación el programa debe mostrar por pantalla la cantidad cobrada hasta el momento y la cantidad pendiente de cobro.
+
+
+facturas = {}
+cantidad_cobrada = 0
+cantidad_pendiente = 0
+
+while True:
+    accion = input("¿Desea añadir una nueva factura (a), pagar una existente (p) o terminar (t)? ")
+
+    if accion == "a":
+        tipo = input("Introduce el tipo de factura: ")
+        coste = float(input("Introduce el coste de la factura: "))
+        facturas[tipo] = coste
+        cantidad_pendiente += coste
+    elif accion == "p":
+        if not facturas:
+            print("No hay facturas para pagar.")
+            continue
+
+        print("Facturas existentes:")
+        print(facturas)
+
+        tipo = input("Introduce el tipo de factura a pagar: ")
+        if tipo in facturas:
+            costo_pagado = facturas[tipo]
+            cantidad_cobrada += costo_pagado
+            cantidad_pendiente -= costo_pagado
+            del facturas[tipo]  # Eliminar la factura pagada después de restar el costo
+        else:
+            print("La factura no existe")
+            continue
+    elif accion == "t":
+        break
+    else:
+        print("La acción no es correcta")
+
+    print(f"Recaudado hasta el momento: {cantidad_cobrada}")
+    print(f"Pendiente de cobro: {cantidad_pendiente}")
+
+#36. Escribe un programa que implemente una función una función que dependiendo de los parámetros que reciba: convierte a segundos o a horas:
+    # a) Si recibe un argumento, supone que son segundos y convierte a horas, minutos y segundos.
+    # b) Si recibe 3 argumentos, supone que son hora, minutos y segundos y los convierte a segundos.
+    # Nota: emplear el concepto de los parámetros *args en funciones de Python
+
+def convertir(*args):
+    if len(args) == 1:
+        segundos = args[0]
+        horas = segundos // 3600
+        segundos %= 3600
+        minutos = segundos // 60
+        segundos %= 60
+        return horas, minutos, segundos
+    elif len(args) == 3:
+        horas, minutos, segundos = args
+        return horas * 3600 + minutos * 60 + segundos
+    else:
+        print("La función necesita 1 o 3 argumentos")
+
+    # Ejemplo de uso
+print(convertir(3600))
+print(convertir(1, 0, 0))
+
+#37. Diseñar una función que calcule el n-ésimo término de la serie de Fibonacci. Investiga en la red la expresión matemática de dicha serie.
+
+def fibonacci(n):
+    if n < 2:
+        return n
+    else:
+        return fibonacci(n-1) + fibonacci(n-2)
+    
+print(fibonacci(25))
+
+#38. Diseñar una función que calcule la distancia euclídea entre dos puntos introducidos por teclado, de la forma (x1,y1) e (x2,y2).
+
+import math 
+
+def distancia_euclidea(x1,y1,x2,y2):
+    return math.sqrt((x2-x1)**2+(y2-y1)**2)
+
+print(distancia_euclidea(1,2,3,4))
+
+
+#39. Escribir un programa que introduciendo las coordenadas x e y de un punto en el espacio de dos dimensiones, calcule las coordenadas polares. Debe crearse un método que realice esta transformación. Las ecuaciones de la transformación son: 𝑥 = 𝑟 × cos 𝜃   𝑦 = 𝑟 × sin 𝜃
+
+import math
+
+def coordenadas_polares(x,y):
+    r = math.sqrt(x**2+y**2)
+    theta = math.atan2(y,x)
+    return r, theta
+
+print(coordenadas_polares(1,1))
+
+#40. Resuelve el ejercicio 7 empleando un método que lleve como parámetros los coeficientes de la ecuación de segundo grado.  (#7. Escribir y ejecutar un programa que resuelva una ecuación de 2º grado introduciendo por teclado las constantes a, b y c.)
+
+import math
+
+def ecuacion_segundo_grado(a,b,c):
+    discriminante = b**2 - 4*a*c
+    if discriminante < 0:
+        print('La ecuación no tiene solución real')
+    elif discriminante == 0:
+        x = -b/(2*a)
+        print('La solución es: ', x)
+    else:
+        x1 = (-b + discriminante**0.5)/(2*a)
+        x2 = (-b - discriminante**0.5)/(2*a)
+        print('Las soluciones son: ', x1, ' y ', x2)
+
+ecuacion_segundo_grado(1,2,1)
+
+#41. Escribe un método que introduzca 10 números enteros en una lista y que luego los invierta, colocando el primero en la décima posición, el segundo en la novena posición, etc…
+
+lista = []
+numeros = input("Introduce 10 números separados por coma: ")
+for numero in numeros.split(","):
+    lista.append(int(numero))
+
+lista_invertida = []
+for numero in lista:
+    lista_invertida.insert(0, numero)
+
+print("Lista original:", lista)
+print("Lista invertida:", lista_invertida)
+
+#42. Escriba un programa que obtenga los 20 primeros números primos, los introduzca en una lista, y muestre esa lista por pantalla.
+
+primos = []
+numero = 2
+
+while len(primos) < 20:
+    es_primo = True
+    for i in range(2, numero):
+        if numero % i == 0:
+            es_primo = False
+            break
+    if es_primo:
+        primos.append(numero)
+    numero += 1
+
+print(primos)
+
+#43. Desarrolle un juego en el que se tenga que adivinar una combinación secreta formada por n números del 1 al 5, donde n se introducirá por teclado. Se generará una combinación aleatoria de n elementos que el usuario tendrá que acertar. En cada intento se muestra si el digito que introduce el jugador es mayor, menor o igual que el que corresponde en la combinación secreta.
+
+import random
+
+def generar_combinacion_secreta(n):
+    return [random.randint(1, 5) for _ in range(n)]
+
+def jugar_juego():
+    intentos = 0
+
+    while True:
+        n = int(input("Introduce la longitud de la combinación secreta (número de elementos): "))
+        combinacion_secreta = generar_combinacion_secreta(n)
+
+        print("Combinación secreta generada. ¡Adivina la combinación!")
+
+        while True:
+            intento = input("Introduce tu combinación (separada por espacios): ")
+            intento_lista = [int(num) for num in intento.split()]
+
+            if len(intento_lista) != n:
+                print(f"Debes introducir exactamente {n} números. Intenta de nuevo.")
+                continue
+
+            intentos += 1
+
+            if intento_lista == combinacion_secreta:
+                print(f"¡Felicidades! Adivinaste la combinación en {intentos} intentos.")
+                break
+            else:
+                comparacion = [">" if a > b else "<" if a < b else "=" for a, b in zip(intento_lista, combinacion_secreta)]
+                print(f"Respuesta: {comparacion}. Intenta de nuevo.")
+
+jugar_juego()
+
+
+#44. Diseñar un programa que determine la media de las calificaciones en cada asignatura de primero de bachillerato para 10 alumnos. Emplear listas para resolver el ejercicio.
+
+# Definir las asignaturas
+asignaturas = ["Lengua", "Historia", "Filosofía"]
+
+# Pedir al usuario las calificaciones de los 10 alumnos
+calificaciones = []
+for i in range(10):
+    calificaciones_alumno = []
+    for asignatura in asignaturas:
+        calificacion = float(input(f"Introduce la calificación de {asignatura} del alumno {i+1}: "))
+        calificaciones_alumno.append(calificacion)
+    calificaciones.append(calificaciones_alumno)
+
+# Calcular la media de cada alumno
+medias = [sum(calificaciones_alumno) / len(calificaciones_alumno) for calificaciones_alumno in calificaciones]
+
+# Calcular la media de cada asignatura
+medias_asignaturas = [sum(calificaciones[j][i] for j in range(10)) / 10 for i in range(len(asignaturas))]
+
+# Mostrar los resultados
+print("Las medias de cada alumno son:")
+for i, media in enumerate(medias):
+    print(f"Alumno {i+1}: {media}")
+
+print("Las medias de cada asignatura son:")
+for i, media_asignatura in enumerate(medias_asignaturas):
+    print(f"{asignaturas[i]}: {media_asignatura}")
+
+#45. Escribir un programa que incluya un método que lea 10 líneas, cada una de ellas de un máximo de 50 caracteres y ordénalas por número de caracteres en una lista
+
+def leer_lineas():
+    lineas = []
+    for i in range(10):
+        linea = input(f"Introduce la línea {i+1}: ")
+        lineas.append(linea)
+    return lineas
+
+def ordenar_lineas(lineas):
+    return sorted(lineas, key=len)
+
+lineas = leer_lineas()
+
+print("Líneas ordenadas por longitud:")
+print(ordenar_lineas(lineas))
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+
 
 
 
