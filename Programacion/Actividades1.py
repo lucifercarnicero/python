@@ -714,6 +714,215 @@ def longitud_palabras(frase):
 frase = input("Introduce una frase: ")
 print(longitud_palabras(frase))
 
+#47. Escribir una función reciba un diccionario con los módulos y las notas de un alumno y devuelva otro diccionario con los módulos en mayúsculas y las calificaciones correspondientes a las notas.
+
+def calificaciones_mayusculas(calificaciones):
+    print("Diccionario original:")
+    print(calificaciones)
+    
+    calificaciones_mayus = {modulo.upper(): calificacion for modulo, calificacion in calificaciones.items()}
+    
+    print("\nDiccionario con módulos en mayúsculas:")
+    print(calificaciones_mayus)
+    
+    return calificaciones_mayus
+
+calificaciones = {"Programación": 9, "Lenguajes de marcas": 4, "Bases de datos": 5}
+calificaciones_mayusculas(calificaciones)
+
+#48. Escribe un programa que incluya un método que lleve como parámetro un string introducido por teclado y que busque en él las vocales y nos indique la posición en la que están.
+
+def buscar_vocales(frase):
+    vocales = "aeiou"
+    vocales_encontradas = []
+    for i, letra in enumerate(frase):
+        if letra in vocales:
+            vocales_encontradas.append((i, letra))
+    return vocales_encontradas
+
+frase = input("Introduce una frase: ")
+print(buscar_vocales(frase))
+
+#49. . Emplea el método de ordenación por inserción para ordenar:  23,15, 6, 2, 34,1 ,4 ,8
+
+def ordenar_insercion(lista):
+    for i in range(1, len(lista)):
+        valor_actual = lista[i]
+        posicion_actual = i
+
+        while posicion_actual > 0 and lista[posicion_actual - 1] > valor_actual:
+            lista[posicion_actual] = lista[posicion_actual - 1]
+            posicion_actual -= 1
+
+        lista[posicion_actual] = valor_actual
+
+lista = [23, 15, 6, 2, 34, 1, 4, 8]
+ordenar_insercion(lista)
+print(lista)
+
+#50. Escribe un programa que incluya un método que lea una frase de teclado e indique si es palíndroma, esto es, que se lee igual de derecha a izquierda que de izquierda a derecha sin tener en cuenta los espacios ni las tildes.
+
+def es_palindroma(frase):
+    frase = frase.replace(" ", "").lower()
+    return frase == frase[::-1]
+
+frase = input("Introduce una frase: ")
+if es_palindroma(frase):
+    print("La frase es palíndroma")
+else:
+    print("La frase no es palíndroma")
+
+
+#51. Diseñar un programa que lea una frase de teclado y la muestre en mayúsculas.
+
+frase = input("Introduce una frase: ")
+print(frase.upper())
+
+#52. . Diseñar un programa que lea una frase por teclado e indique cuantos espacios en blanco tiene.
+
+frase = input("Introduce una frase: ")
+print(frase.count(" "))
+
+#53. Diseñar el juego “la contraseña” en el cual el jugador tiene que introducir palabras por teclado hasta que acierte la contraseña. Como pista el programa le indicara en cada intento cuantas letras ha acertado y en que posición están.
+
+import random
+
+def generar_contraseña():
+    palabras = ["python", "cuerpo", "grano", "plaza", "notas"]
+    return random.choice(palabras)
+
+def mostrar_contraseña_oculta(contraseña, letras_acertadas):
+    return ''.join(c if c in letras_acertadas else '*' for c in contraseña)
+
+def jugar_contraseña():
+    contraseña = generar_contraseña()
+    longitud_contraseña = len(contraseña)
+    contraseña_oculta = '*' * longitud_contraseña
+    letras_acertadas = set()
+    
+    print("Bienvenido al juego de la contraseña.")
+    print(f"La contraseña tiene {longitud_contraseña} letras.")
+    
+    intentos = 0
+    
+    while True:
+        print(f"\nContraseña actual: {contraseña_oculta}")
+        intento = input("Introduce tu palabra: ").lower()
+        
+        if intento == contraseña:
+            intentos += 1
+            print(f"¡Felicidades! Has adivinado la contraseña en {intentos} intentos.")
+            break
+        else:
+            coincidencias = sum(c1 == c2 for c1 in intento for c2 in contraseña)
+            letras_acertadas.update(c1 for c1 in intento if c1 in contraseña)
+            
+            contraseña_oculta = mostrar_contraseña_oculta(contraseña, letras_acertadas)
+            
+            print(f"Letras acertadas: {coincidencias}")
+            print(f"Nueva contraseña: {contraseña_oculta}")
+            
+            intentos += 1
+
+if __name__ == "__main__":
+    jugar_contraseña()
+
+#54. Introducir por teclado dos palabras e indicar cual es la que tiene menos caracteres.
+
+palabra1 = input("Introduce la primera palabra: ")
+palabra2 = input("Introduce la segunda palabra: ")
+
+if len(palabra1) < len(palabra2):
+    print(f"{palabra1} tiene menos caracteres que {palabra2}")
+elif len(palabra1) > len(palabra2):
+    print(f"{palabra2} tiene menos caracteres que {palabra1}")
+else:
+    print("Ambas palabras tienen el mismo número de caracteres")
+
+#55. Diseñar un programa que lea una frase de teclado e indique cuantas veces aparece cada letra del abecedario en ella.
+
+
+frase = input("Introduce una frase: ")
+letras = "abcdefghijklmnopqrstuvwxyz"
+
+for letra in letras:
+    repeticiones = frase.count(letra)
+    if repeticiones > 0:
+        print(f"La letra {letra} aparece {repeticiones} veces")
+
+#56. Realice un programa que implemente el juego del ahorcado.
+
+import random
+
+def generar_palabra():
+    diccionario = {"1": "python", "2": "cuerpo", "3": "grano", "4": "plaza", "5": "notas"}
+    clave = random.choice(list(diccionario.keys()))
+    return diccionario[clave]
+
+def mostrar_palabra_oculta(palabra, letras_acertadas):
+    return ''.join(c if c in letras_acertadas else '*' for c in palabra)
+
+def jugar_ahorcado():
+    palabra = generar_palabra()
+    longitud_palabra = len(palabra)
+    palabra_oculta = '*' * longitud_palabra
+    letras_acertadas = set()
+    
+    print("Bienvenido al juego del ahorcado.")
+    print(f"La palabra tiene {longitud_palabra} letras.")
+    
+    intentos = 0
+    intentos_maximos = 10
+    
+    while True:
+        print(f"\nPalabra actual: {palabra_oculta}")
+        print(f"Intentos restantes: {intentos_maximos - intentos}")
+        intento = input("Introduce tu letra: ").lower()
+        
+        if intento == palabra:
+            intentos += 1
+            print(f"¡Felicidades! Has adivinado la palabra en {intentos} intentos.")
+            break
+        elif len(intento) == 1 and intento.isalpha():
+            if intento in palabra:
+                letras_acertadas.add(intento)
+            else:
+                intentos += 1
+                
+            palabra_oculta = mostrar_palabra_oculta(palabra, letras_acertadas)
+            
+            if palabra_oculta == palabra:
+                print(f"¡Felicidades! Has adivinado la palabra en {intentos} intentos.")
+                break
+        else:
+            print("Entrada inválida. Introduce una letra válida.")
+        
+        if intentos == intentos_maximos:
+            print("Lo siento, has perdido. La palabra era:", palabra)
+            break
+
+if __name__ == "__main__":
+    jugar_ahorcado()
+
+
+
+
+
+
+
+
+
+        
+
+
+
+
+
+
+
+
+
+
 
 
 
