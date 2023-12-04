@@ -705,6 +705,17 @@ lineas = leer_lineas()
 print("Líneas ordenadas por longitud:")
 print(ordenar_lineas(lineas))
 
+#46. Escribir una función que reciba una frase y devuelva un diccionario con las palabras que contiene y su longitud.
+
+def longitud_palabras(frase):
+    palabras = frase.split()
+    return {palabra: len(palabra) for palabra in palabras}
+
+frase = input("Introduce una frase: ")
+print(longitud_palabras(frase))
+
+
+
 
 
 
