@@ -1,0 +1,1 @@
+Hola, soy un fichero. Este es mi contenido predeterminado.nueva linea

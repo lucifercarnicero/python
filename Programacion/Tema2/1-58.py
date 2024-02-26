@@ -348,8 +348,6 @@ print("\b");
 #28. . Escribir una función sum() y una función multip() que sumen y multipliquen respectivamente todos los números de una lista. Por ejemplo: sum([1,2,3,4]) debería devolver 10 y multip([1,2,3,4]) debería devolver 24.
 
 
-
-
 print(sum([1,2,3,4])) #función sum ya existe en python
 
 def sumar_lista(lista):
@@ -462,22 +460,27 @@ print(f"\nEl número total de créditos del ciclo es: {total_creditos}")
 diccionario = {}
 palabras = input("Introduce las palabras y sus traducciones en formato palabra:traducción separadas por comas: ")
 
-# Dividir la cadena en una lista de palabras
+# Dividir la cadena en una lista de palabras y agregarlas al diccionario
 for palabra in palabras.split(","):
-    # Dividir cada palabra en una lista de dos elementos
     clave, valor = palabra.split(":")
-    # Agregar clave y valor al diccionario
-    diccionario[clave] = valor
+    diccionario[clave.lower()] = valor.lower()
+
+# Imprimir el diccionario para depuración
+print("Diccionario:", diccionario)
 
 # Pedir una frase para traducir
 frase = input("Introduce una frase en español: ")
 
 # Traducir la frase palabra a palabra
-for palabra in frase.split():
-    if palabra in diccionario:
-        print(diccionario[palabra], end=" ")
-    else:
-        print(palabra, end=" ")
+traduccion = []
+for palabra in frase.lower().split():
+    traducida = diccionario.get(palabra, palabra)
+    print(f"Traduciendo '{palabra}': '{traducida}'")  # Impresión de depuración
+    traduccion.append(traducida)
+
+print("Frase traducida:", " ".join(traduccion))
+
+
 
         
 #35. Escribir un programa que gestione las facturas de una familia. Las facturas se almacenarán en un diccionario donde la clave de cada factura será el tipo de factura -agua, gas,…- y el valor el coste de la factura. El programa debe preguntar al usuario si quiere añadir una nueva factura, pagar una existente o terminar. Si desea añadir una nueva factura se preguntará por el tipo de factura y su coste y se añadirá al diccionario. Si se desea pagar una factura se preguntará por el tipo de factura y se eliminará del diccionario. Después de cada operación el programa debe mostrar por pantalla la cantidad cobrada hasta el momento y la cantidad pendiente de cobro.
@@ -1106,16 +1109,6 @@ if __name__ == "__main__":
     print("\nInformación de Trenes:")
     print(f"Tren 1: Maquinista: {tren1.maquinista_asignado.nombre}, Locomotora: {tren1.locomotora.matricula}, Vagones: {[vagon.matricula for vagon in tren1.vagones]}")
     print(f"Tren 2: Maquinista: {tren2.maquinista_asignado.nombre}, Locomotora: {tren2.locomotora.matricula}, Vagones: {[vagon.matricula for vagon in tren2.vagones]}")
-
-
-
-
-
-
-
-
-
-
 
 
         
